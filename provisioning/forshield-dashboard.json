@@ -1,0 +1,1563 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.5.1"
+    },
+    {
+      "type": "panel",
+      "id": "marcusolsson-dynamictext-panel",
+      "name": "Dynamic Text",
+      "version": "3.1.0"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": false,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": "PostgreSQL",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "index": 1,
+                        "text": "Waiting for first sync"
+                      },
+                      "1": {
+                        "index": 0,
+                        "text": "OK"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "light-blue",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": "PostgreSQL",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(*) FROM information_schema.tables\n     WHERE  table_schema = 'public'\n     AND    table_name   = 'aws_policy_results'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "aws_efs_filesystems",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Data Source",
+      "type": "stat"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Time$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": "PostgreSQL",
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select _cq_sync_time as time, 1 from aws_resources order by _cq_sync_time desc limit 1;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "aws_efs_filesystems",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Last Fetch",
+      "type": "stat"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Time$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": "PostgreSQL",
+          "editorMode": "code",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select execution_time as time, 1 from aws_test_results order by execution_time desc limit 1;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "aws_efs_filesystems",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Last Policy Evaluation",
+      "type": "stat"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 15,
+        "y": 0
+      },
+      "id": 26,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<a style=\"background-color:#2196f3;border:none;color:#fff;padding:8px 15px;text-align:center;text-decoration:none;display:inline-block;font-size:13px;border-radius:5px;transition-duration:0.4s;cursor:pointer;\" target=\"_blank\" href=\"http://localhost:7000/generate_pdf_report\" class=\"material-btn\">PDF report</a>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.5.1",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 18,
+        "y": 0
+      },
+      "id": 27,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<a style=\"background-color:#36454F;border:none;color:#fff;padding:8px 15px;text-align:center;text-decoration:none;display:inline-block;font-size:13px;border-radius:5px;transition-duration:0.4s;cursor:pointer;\" target=\"_blank\" href=\"http://localhost:7000/generate_csv_export\" class=\"material-btn\">CSV export</a>",
+        "mode": "html"
+      },
+      "pluginVersion": "9.5.1",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 9,
+      "panels": [],
+      "title": "Policy Evaluation",
+      "type": "row"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-yellow",
+            "mode": "continuous-RdYlGr"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 1,
+            "axisSoftMin": 0,
+            "fillOpacity": 100,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "noValue": "No data to display",
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "orange",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Ok"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "thresholds"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Alarm"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#1e1e1e",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 0,
+        "y": 3
+      },
+      "id": 5,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.94,
+        "fullHighlight": true,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false,
+          "width": 0
+        },
+        "orientation": "horizontal",
+        "showValue": "never",
+        "stacking": "percent",
+        "tooltip": {
+          "mode": "none",
+          "sort": "none"
+        },
+        "xField": "category",
+        "xTickLabelRotation": -45,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": "PostgreSQL",
+          "editorMode": "code",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select\n  framework,\n  category,\n  count(case when status = 'ok' then 1 else null end) as \"Ok\",\n  count(case when status = 'alarm' then 1 else null end) as \"Alarm\"\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) group by framework, category order by char_length(category) desc;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "threshold"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "aws_cloudwatch_alarms",
+          "timeColumn": "configuration_updated_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Maturity",
+      "transformations": [],
+      "transparent": true,
+      "type": "barchart"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 10,
+        "y": 3
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 80
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": "PostgreSQL",
+          "editorMode": "code",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in ($category);",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "threshold"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "aws_cloudwatch_alarms",
+          "timeColumn": "configuration_updated_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Total checks",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 13,
+        "y": 3
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 80
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": "PostgreSQL",
+          "editorMode": "code",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm';",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "threshold"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "aws_cloudwatch_alarms",
+          "timeColumn": "configuration_updated_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Alarms",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 22,
+      "panels": [
+        {
+          "datasource": "PostgreSQL",
+          "description": "",
+          "gridPos": {
+            "h": 21,
+            "w": 7,
+            "x": 0,
+            "y": 10
+          },
+          "id": 23,
+          "options": {
+            "content": "{{#each data}}\r\n<table width=100%>\r\n  <tr>\r\n    <td style='background-color:#f2495c;'>\r\n      <p style='margin-top:5px; margin-left:10px; margin-right:10px; margin-bottom: 5px;'>\r\n        <b class=\"head\">{{title}}</b>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n  <tr>\r\n    <td>\r\n      <p style='margin-top:10px; margin-left:10px; margin-right:8px; margin-bottom:10px'>\r\n        <b class=\"text\">{{description}}</b>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n  <tr>\r\n    <td style=\"border:0px;\">\r\n      <p style='border:0px; text-align: right; margin-right:15px;'>\r\n        <b class=\"arn\">{{resource_name}}</b>\r\n        <a class=\"button\" href=\"{{link}}\" target=\"_blank\">Fix this</a>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n</table>\r\n{{/each}}",
+            "defaultContent": "The query didn't return any results.",
+            "editor": {
+              "format": "auto",
+              "height": 281,
+              "language": "html"
+            },
+            "editors": [
+              "styles"
+            ],
+            "everyRow": false,
+            "helpers": "",
+            "styles": "table {\r\n  border-collapse: collapse;\r\n  border-radius: 1em;\r\n  overflow: hidden;\r\n  margin-bottom: 15px;\r\n  border: none;\r\n}\r\n\r\nth,\r\ntd {\r\n  padding: 1em;\r\n  background: #fff2f3;\r\n  border: none;\r\n}\r\n\r\nb.head {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 14px;\r\n  font-weight: 700;\r\n  color: white;\r\n}\r\n\r\nb.text {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 13px;\r\n  font-weight: 400;\r\n  color: rgb(59, 59, 59);\r\n}\r\n\r\nb.arn {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 13px;\r\n  font-style: italic;\r\n  margin-right: 20px;\r\n  font-weight: 600;\r\n  color: rgb(178, 178, 178);\r\n}\r\n\r\n.button {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-weight: 600;\r\n  font-size: 14px;\r\n  color: black;\r\n  text-decoration: underline;\r\n}"
+          },
+          "targets": [
+            {
+              "datasource": "PostgreSQL",
+              "editorMode": "code",
+              "format": "table",
+              "hide": false,
+              "rawQuery": true,
+              "rawSql": "select * \r\nfrom aws_policy_results \r\nwhere \r\n  account_id in (${account_id}) and \r\n  framework in (${framework}) and \r\n  category in (${category}) and \r\n  severity = 'critical' and \r\n  status = 'alarm';",
+              "refId": "B",
+              "sql": {
+                "columns": [
+                  {
+                    "parameters": [],
+                    "type": "function"
+                  }
+                ],
+                "groupBy": [
+                  {
+                    "property": {
+                      "type": "string"
+                    },
+                    "type": "groupBy"
+                  }
+                ],
+                "limit": 50
+              }
+            }
+          ],
+          "title": "CRITICAL (${nb_critical_alarms})",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "marcusolsson-dynamictext-panel"
+        },
+        {
+          "datasource": "PostgreSQL",
+          "description": "",
+          "gridPos": {
+            "h": 19,
+            "w": 8,
+            "x": 7,
+            "y": 10
+          },
+          "id": 20,
+          "options": {
+            "content": "{{#each data}}\r\n<table width=100%>\r\n  <tr>\r\n    <td style='background-color:#fe8700;'>\r\n      <p style='margin-top:5px; margin-left:10px; margin-right:10px; margin-bottom: 5px;'>\r\n        <b class=\"head\">{{title}}</b>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n  <tr>\r\n    <td>\r\n      <p style='margin-top:10px; margin-left:10px; margin-right:8px; margin-bottom:10px'>\r\n        <b class=\"text\">{{description}}</b>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n  <tr>\r\n    <td style=\"border:0px;\">\r\n      <p style='border:0px; text-align: right; margin-right:15px;'>\r\n        <b class=\"arn\">{{resource_name}}</b>\r\n        <a class=\"button\" href=\"{{link}}\" target=\"_blank\">Fix this</a>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n</table>\r\n{{/each}}",
+            "defaultContent": "The query didn't return any results.",
+            "editor": {
+              "format": "auto",
+              "height": 281,
+              "language": "html"
+            },
+            "editors": [
+              "styles"
+            ],
+            "everyRow": false,
+            "helpers": "",
+            "styles": "table {\r\n  border-collapse: collapse;\r\n  border-radius: 1em;\r\n  overflow: hidden;\r\n  margin-bottom: 15px;\r\n  border: none;\r\n}\r\n\r\nth,\r\ntd {\r\n  padding: 1em;\r\n  background: #fffbf2;\r\n  border: none;\r\n}\r\nb.head {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 14px;\r\n  font-weight: 700;\r\n  color: white;\r\n}\r\n\r\nb.text {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 13px;\r\n  font-weight: 400;\r\n  color: rgb(59, 59, 59);\r\n}\r\n\r\nb.arn {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 13px;\r\n  font-style: italic;\r\n  margin-right: 20px;\r\n  font-weight: 600;\r\n  color: rgb(178, 178, 178);\r\n}\r\n\r\n.button {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-weight: 600;\r\n  font-size: 14px;\r\n  color: black;\r\n  text-decoration: underline;\r\n}"
+          },
+          "targets": [
+            {
+              "datasource": "PostgreSQL",
+              "editorMode": "code",
+              "format": "table",
+              "hide": false,
+              "rawQuery": true,
+              "rawSql": "select * \r\nfrom aws_policy_results \r\nwhere \r\n  account_id in (${account_id}) and \r\n  framework in (${framework}) and \r\n  category in (${category}) and \r\n  severity = 'high' and \r\n  status = 'alarm';",
+              "refId": "B",
+              "sql": {
+                "columns": [
+                  {
+                    "parameters": [],
+                    "type": "function"
+                  }
+                ],
+                "groupBy": [
+                  {
+                    "property": {
+                      "type": "string"
+                    },
+                    "type": "groupBy"
+                  }
+                ],
+                "limit": 50
+              }
+            }
+          ],
+          "title": "HIGH (${nb_high_alarms})",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [],
+                "match": "any",
+                "type": "include"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "marcusolsson-dynamictext-panel"
+        },
+        {
+          "datasource": "PostgreSQL",
+          "description": "",
+          "gridPos": {
+            "h": 19,
+            "w": 8,
+            "x": 15,
+            "y": 10
+          },
+          "id": 24,
+          "options": {
+            "content": "{{#each data}}\r\n<table width=100%>\r\n  <tr>\r\n    <td style='background-color:#5794f2;'>\r\n      <p style='margin-top:5px; margin-left:10px; margin-right:10px; margin-bottom: 5px;'>\r\n        <b class=\"head\">{{title}}</b>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n  <tr>\r\n    <td>\r\n      <p style='margin-top:10px; margin-left:10px; margin-right:8px; margin-bottom:10px'>\r\n        <b class=\"text\">{{description}}</b>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n  <tr>\r\n    <td style=\"border:0px;\">\r\n      <p style='border:0px; text-align: right; margin-right:15px;'>\r\n        <b class=\"arn\">{{resource_name}}</b>\r\n        <a class=\"button\" href=\"{{link}}\" target=\"_blank\">Fix this</a>\r\n      </p>\r\n    </td>\r\n  </tr>\r\n</table>\r\n{{/each}}",
+            "defaultContent": "The query didn't return any results.",
+            "editor": {
+              "format": "auto",
+              "height": 281,
+              "language": "html"
+            },
+            "editors": [
+              "styles"
+            ],
+            "everyRow": false,
+            "helpers": "",
+            "styles": "table {\r\n  border-collapse: collapse;\r\n  border-radius: 1em;\r\n  overflow: hidden;\r\n  margin-bottom: 15px;\r\n  border: none;\r\n}\r\n\r\nth,\r\ntd {\r\n  padding: 1em;\r\n  background: #e6eefa;\r\n  border: none;\r\n}\r\nb.head {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 14px;\r\n  font-weight: 700;\r\n  color: white;\r\n}\r\n\r\nb.text {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 13px;\r\n  font-weight: 400;\r\n  color: rgb(59, 59, 59);\r\n}\r\n\r\nb.arn {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-size: 13px;\r\n  font-style: italic;\r\n  margin-right: 20px;\r\n  font-weight: 600;\r\n  color: rgb(178, 178, 178);\r\n}\r\n\r\n.button {\r\n  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n  font-weight: 600;\r\n  font-size: 14px;\r\n  color: black;\r\n  text-decoration: underline;\r\n}"
+          },
+          "targets": [
+            {
+              "datasource": "PostgreSQL",
+              "editorMode": "code",
+              "format": "table",
+              "hide": false,
+              "rawQuery": true,
+              "rawSql": "select * \r\nfrom aws_policy_results \r\nwhere \r\n  account_id in (${account_id}) and \r\n  framework in (${framework}) and \r\n  category in (${category}) and \r\n  severity = 'medium' and \r\n  status = 'alarm';",
+              "refId": "B",
+              "sql": {
+                "columns": [
+                  {
+                    "parameters": [],
+                    "type": "function"
+                  }
+                ],
+                "groupBy": [
+                  {
+                    "property": {
+                      "type": "string"
+                    },
+                    "type": "groupBy"
+                  }
+                ],
+                "limit": 50
+              }
+            }
+          ],
+          "title": "MEDIUM (${nb_medium_alarms})",
+          "transformations": [],
+          "transparent": true,
+          "type": "marcusolsson-dynamictext-panel"
+        }
+      ],
+      "title": "Alarms (${nb_alarms})",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 29,
+      "panels": [],
+      "title": "Logs",
+      "type": "row"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "json-view"
+            },
+            "filterable": false,
+            "inspect": true,
+            "width": 20
+          },
+          "mappings": [
+            {
+              "options": {
+                "fail": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "Fail"
+                },
+                "pass": {
+                  "index": 1,
+                  "text": "Pass"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "resource_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 563
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "title"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 462
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Account"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 149
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Benchmark"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 265
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Test"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 566
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 91
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "resource"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 324
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Resource (ARN)"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 266
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "execution_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 341
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Check ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 112
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Account ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 149
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Title"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 589
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Category"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 161
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "°"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 70
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Check"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 101
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Resource ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 378
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Framework"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 131
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Resource"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 304
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Message"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 847
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Recommendation"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 789
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.5.1",
+      "targets": [
+        {
+          "datasource": "PostgreSQL",
+          "editorMode": "code",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select \r\n  category as \"Category\", \r\n  check_id as \"Check ID\", \r\n  resource_name as \"Resource\", \r\n  title as \"Recommendation\", \r\n  status as \"Status\" \r\nfrom aws_policy_results\r\nwhere account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status in (${status});",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "threshold"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "aws_cloudwatch_alarms",
+          "timeColumn": "configuration_updated_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select account_id from aws_policy_results",
+        "description": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Account",
+        "multi": true,
+        "name": "account_id",
+        "options": [],
+        "query": "select account_id from aws_policy_results",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select framework from aws_policy_results",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Policy",
+        "multi": true,
+        "name": "framework",
+        "options": [],
+        "query": "select framework from aws_policy_results",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select category from aws_policy_results;",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Category",
+        "multi": true,
+        "name": "category",
+        "options": [],
+        "query": "select category from aws_policy_results;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select status from aws_policy_results",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Status",
+        "multi": true,
+        "name": "status",
+        "options": [],
+        "query": "select status from aws_policy_results",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm';",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "nb_alarms",
+        "options": [],
+        "query": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm';",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm' and severity = 'critical';",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "nb_critical_alarms",
+        "options": [],
+        "query": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm' and severity = 'critical';",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm' and severity = 'high';",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "nb_high_alarms",
+        "options": [],
+        "query": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm' and severity = 'high';",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": "PostgreSQL",
+        "definition": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm' and severity = 'medium';",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "nb_medium_alarms",
+        "options": [],
+        "query": "select\n  count(*)\nfrom aws_policy_results where account_id in (${account_id}) and framework in (${framework}) and category in (${category}) and status = 'alarm' and severity = 'medium';",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "CSPM Dashboard (PoC)",
+  "uid": "eQTkhPenz",
+  "version": 342,
+  "weekStart": ""
+}
